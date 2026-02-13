@@ -1,0 +1,53 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  gender    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  answers   Answer[]
+  matchesA  Match[]  @relation("MatchesA")
+  matchesB  Match[]  @relation("MatchesB")
+}
+
+model Question {
+  id      String   @id @default(cuid())
+  text    String
+  type    String
+  answers Answer[]
+}
+
+model Answer {
+  id               String   @id @default(cuid())
+  userId           String
+  questionId       String
+  myAttribute      String
+  desiredAttribute String
+  importance       String
+  user             User     @relation(fields: [userId], references: [id])
+  question         Question @relation(fields: [questionId], references: [id])
+
+  @@unique([userId, questionId])
+}
+
+model Match {
+  id        String   @id @default(cuid())
+  userAId   String
+  userBId   String
+  score     Float
+  createdAt DateTime @default(now())
+  userA     User     @relation("MatchesA", fields: [userAId], references: [id])
+  userB     User     @relation("MatchesB", fields: [userBId], references: [id])
+
+  @@unique([userAId, userBId])
+}
