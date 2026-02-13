@@ -42,7 +42,7 @@ export function HomePage({ questions }: { questions: Question[] }) {
     }, [])
 
     // Debug toggle for testing
-    const toggleDebugDate = () => setIsRevealDay(!isRevealDay)
+
 
     const handleCheckMatches = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -63,12 +63,7 @@ export function HomePage({ questions }: { questions: Question[] }) {
                     <Heart className="w-6 h-6 text-brand-pink fill-brand-pink animate-pulse" />
                     <span className="font-serif tracking-widest text-brand-rose">CURA</span>
                 </div>
-                <button
-                    onClick={toggleDebugDate}
-                    className="text-[10px] uppercase tracking-widest text-white/30 hover:text-white/60 transition-colors border border-white/10 px-3 py-1 rounded-full"
-                >
-                    [DEBUG: Toggle Feb 14]
-                </button>
+
             </nav>
 
             <div className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-80px)] p-6">
